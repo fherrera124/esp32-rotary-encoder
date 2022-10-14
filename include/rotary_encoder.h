@@ -45,6 +45,7 @@
 #include "freertos/queue.h"
 #include "esp_err.h"
 #include "driver/gpio.h"
+#include "button.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -90,7 +91,6 @@ typedef struct
     uint8_t table_state;                    ///< Internal state
     volatile rotary_encoder_state_t state;  ///< Device state
 } rotary_encoder_info_t;
-
 
 /**
  * @brief Enum representing the event type of the button

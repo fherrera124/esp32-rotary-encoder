@@ -221,15 +221,18 @@ esp_err_t rotary_encoder_init(rotary_encoder_info_t * info, gpio_num_t pin_a, gp
         info->state.direction = ROTARY_ENCODER_DIRECTION_NOT_SET;
 
         // configure GPIOs
-        gpio_pad_select_gpio(info->pin_a);
-        gpio_set_pull_mode(info->pin_a, GPIO_PULLUP_ONLY);
-        gpio_set_direction(info->pin_a, GPIO_MODE_INPUT);
-        gpio_set_intr_type(info->pin_a, GPIO_INTR_ANYEDGE);
+        gpio_config_t gpio_conf;
 
-        gpio_pad_select_gpio(info->pin_b);
-        gpio_set_pull_mode(info->pin_b, GPIO_PULLUP_ONLY);
-        gpio_set_direction(info->pin_b, GPIO_MODE_INPUT);
-        gpio_set_intr_type(info->pin_b, GPIO_INTR_ANYEDGE);
+        gpio_conf.pin_bit_mask = 1ULL << info->pin_a | 1ULL << info->pin_b;
+        gpio_conf.mode = GPIO_MODE_INPUT;
+        gpio_conf.pull_up_en = GPIO_PULLUP_ENABLE;
+        gpio_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
+        gpio_conf.intr_type = GPIO_INTR_ANYEDGE;
+
+        gpio_config(&gpio_conf);
+
+        /* Install ISR service */
+        gpio_install_isr_service(0);
 
         // install interrupt handlers
         gpio_isr_handler_add(info->pin_a, _isr_rotenc, info);
