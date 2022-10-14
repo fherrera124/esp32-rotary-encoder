@@ -91,13 +91,28 @@ typedef struct
     volatile rotary_encoder_state_t state;  ///< Device state
 } rotary_encoder_info_t;
 
+
 /**
- * @brief Struct represents a queued event, used to communicate current position to a waiting task
+ * @brief Enum representing the event type of the button
+ */
+typedef enum {
+    BUTTON_EVENT = 0,
+    ROTARY_ENCODER_EVENT
+} event_type_t;
+
+/**
+ * @brief Struct represents a queued event, used to communicate to a waiting task the current
+ * position (in case of a rotary encoder event), or the press type (in case of a button event).
  */
 typedef struct
 {
-    rotary_encoder_state_t state;  ///< The device state corresponding to this event
+    event_type_t event_type;
+    union {
+        button_press_e btn_event;  ///< The event type of the button
+        rotary_encoder_state_t re_state; ///< The rotary encoder state corresponding to this event
+    };
 } rotary_encoder_event_t;
+
 
 /**
  * @brief Initialise the rotary encoder device with the specified GPIO pins and full step increments.
@@ -163,6 +178,14 @@ esp_err_t rotary_encoder_get_state(const rotary_encoder_info_t * info, rotary_en
  * @return ESP_OK if successful, ESP_FAIL or ESP_ERR_* if an error occurred.
  */
 esp_err_t rotary_encoder_reset(rotary_encoder_info_t * info);
+
+/**
+ * @brief Initialise the rotary encoder with default settings by calling
+ *        rotary_encoder_init() with GPIOs from the Kconfig file. 
+ * @param[in, out] info Pointer to allocated rotary encoder info structure.
+ * @return ESP_OK if successful, ESP_FAIL or ESP_ERR_* if an error occurred.
+ */
+esp_err_t rotary_encoder_default_init(rotary_encoder_info_t* info);
 
 
 #ifdef __cplusplus

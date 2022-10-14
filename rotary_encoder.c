@@ -192,7 +192,8 @@ static void _isr_rotenc(void * args)
     {
         rotary_encoder_event_t queue_event =
         {
-            .state =
+            .event_type = ROTARY_ENCODER_EVENT,
+            .re_state =
             {
                 .position = info->state.position,
                 .direction = info->state.direction,

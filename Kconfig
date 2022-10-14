@@ -1,0 +1,20 @@
+menu "Rotary encoder"
+
+	config RE_CLK_GPIO
+		int "GPIO pin number to connect CLK pin"
+		default 4
+
+	config RE_DT_GPIO
+		int "GPIO pin number to connect DT pin"
+		default 0
+
+	config RE_BTN_ENABLE
+		bool "Enable rotary encoder button"
+		default y
+	
+	config RE_BTN_GPIO
+		int "GPIO pin number to connect BTN pin"
+		default 5
+		depends on RE_BTN_ENABLE
+
+endmenu
