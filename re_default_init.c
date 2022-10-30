@@ -7,19 +7,19 @@
  * @date           : Oct 2022
  ******************************************************************************
  * @copyright GNU General Public License
- * 
+ *
  * Copyright (c) 2022 Francisco Herrera
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
  * Software Foundation, either version 3 of the License, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <https://www.gnu.org/licenses/>.
  *
@@ -39,9 +39,6 @@
 #define FLIP_DIRECTION    false  // Set to true to reverse the clockwise/counterclockwise sense
 
 /* Private variables ---------------------------------------------------------*/
-#ifdef CONFIG_RE_BTN_ENABLE
-button_t re_button = {0}; // Analize if should be defined in main instead
-#endif
 
 /* Exported functions --------------------------------------------------------*/
 esp_err_t rotary_encoder_default_init(rotary_encoder_info_t* info) {
@@ -58,9 +55,9 @@ esp_err_t rotary_encoder_default_init(rotary_encoder_info_t* info) {
     ESP_ERROR_CHECK(rotary_encoder_set_queue(info, event_queue));
 
 #ifdef CONFIG_RE_BTN_ENABLE
-    /* Keeping both rotary encoder and the button components
-     * decoupled, only having in common the shared queue */
-    ESP_ERROR_CHECK(re_button_init(&re_button, ROT_ENC_BTN_GPIO, info->queue));
+    button_t* re_button = calloc(1, sizeof(button_t));
+
+    ESP_ERROR_CHECK(re_button_init(re_button, ROT_ENC_BTN_GPIO, info->queue));
 #endif
 
     return ESP_OK;
