@@ -14,7 +14,7 @@ menu "Rotary encoder"
 	
 	config RE_BTN_GPIO
 		int "GPIO pin number to connect BTN pin"
-		default 5
+		default 19
 		depends on RE_BTN_ENABLE
 
 endmenu
