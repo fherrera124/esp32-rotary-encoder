@@ -1,0 +1,7 @@
+## IDF Component Manager Manifest File
+dependencies:
+  ## Required IDF version
+  idf: ">=5.0"
+  button:
+    git: https://github.com/fherrera124/button
+    version: debc8119f1da8e4ef66fe1dd79b1eddc177a2b56
