@@ -4,4 +4,4 @@ dependencies:
   idf: ">=5.0"
   button:
     git: https://github.com/fherrera124/button
-    version: debc8119f1da8e4ef66fe1dd79b1eddc177a2b56
+    version: 529f761a8e7d6b67c503577b2f9323e520c9d8c8
